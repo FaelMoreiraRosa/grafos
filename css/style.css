@@ -1,0 +1,165 @@
+/* ==========================================================================
+   Variáveis (tema claro e escuro)
+   ========================================================================== */
+:root {
+  --bg: #f7f8fa;
+  --card: #ffffff;
+  --texto: #1d2330;
+  --texto-suave: #5d6677;
+  --borda: #dde1e8;
+  --destaque: #3b6cf6;
+  --alerta: #f5a524;
+  --sucesso: #22a06b;
+  --aresta: #9aa3b2;
+
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12151c;
+    --card: #1b202b;
+    --texto: #e8ebf2;
+    --texto-suave: #9aa3b5;
+    --borda: #2c3342;
+    --destaque: #6b93ff;
+    --alerta: #f5b84a;
+    --sucesso: #3ec78f;
+    --aresta: #5b6579;
+    color-scheme: dark;
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--texto);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+h1 { font-size: 2rem; margin: 0.2em 0; }
+h2 { font-size: 1.3rem; margin: 0 0 0.4em; }
+h3 { font-size: 1rem; margin: 0 0 0.4em; }
+p  { margin: 0.4em 0; }
+
+.container { max-width: 860px; margin: 0 auto; padding: 24px 16px 48px; }
+.muted     { color: var(--texto-suave); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ==========================================================================
+   Componentes
+   ========================================================================== */
+.card {
+  background: var(--card);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 20px;
+  margin: 18px 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.box { border: 1px solid var(--borda); border-radius: 10px; padding: 12px; }
+.box strong { color: var(--destaque); }
+
+.scroll-x { overflow-x: auto; }
+
+pre {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 12px;
+  overflow-x: auto;
+  font-size: 0.88rem;
+}
+
+footer { text-align: center; font-size: 0.9rem; }
+
+/* Botões e select */
+button, select {
+  font: inherit;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--borda);
+  background: var(--card);
+  color: var(--texto);
+  cursor: pointer;
+}
+
+button.primario { background: var(--destaque); border-color: var(--destaque); color: #fff; }
+
+button:focus-visible, select:focus-visible { outline: 3px solid var(--destaque); outline-offset: 2px; }
+
+.controles { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; align-items: center; }
+
+/* Tabela (matriz de adjacência) e painéis monoespaçados */
+table { border-collapse: collapse; font-family: ui-monospace, Menlo, Consolas, monospace; }
+th, td { border: 1px solid var(--borda); padding: 4px 10px; text-align: center; }
+td.um { background: var(--destaque); color: #fff; }
+
+.painel {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 6px 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Grafo (SVG)
+   ========================================================================== */
+svg { width: 100%; height: auto; display: block; }
+
+.aresta { stroke: var(--aresta); stroke-width: 2.5; transition: stroke 0.3s; }
+.aresta.arvore { stroke: var(--destaque); stroke-width: 4; }
+
+.vertice circle {
+  fill: var(--card);
+  stroke: var(--aresta);
+  stroke-width: 3;
+  transition: fill 0.3s, stroke 0.3s;
+}
+
+.vertice text {
+  fill: var(--texto);
+  font-size: 18px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.vertice.na-estrutura circle { fill: var(--alerta);   stroke: var(--alerta); }
+.vertice.concluido circle    { fill: var(--sucesso);  stroke: var(--sucesso); }
+.vertice.atual circle        { fill: var(--destaque); stroke: var(--destaque); }
+
+.vertice.na-estrutura text,
+.vertice.concluido text,
+.vertice.atual text { fill: #fff; }
+
+/* Legenda */
+.legenda { list-style: none; display: flex; flex-wrap: wrap; gap: 14px; padding: 0; margin: 8px 0; }
+.ponto { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+.ponto.nao-visto    { background: var(--aresta); }
+.ponto.na-estrutura { background: var(--alerta); }
+.ponto.atual        { background: var(--destaque); }
+.ponto.concluido    { background: var(--sucesso); }

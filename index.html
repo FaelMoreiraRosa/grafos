@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Introdução visual a grafos com simulação de BFS e DFS.">
+  <title>Grafos na prática</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Grafos na prática</h1>
+      <p class="muted">
+        Uma introdução visual inspirada no capítulo de grafos do livro de André Backes
+        "Algoritmos e Estruturas de Dados em Linguagem C". Estratégias de Programação.
+      </p>
+    </header>
+
+    <section class="card" aria-labelledby="titulo-intro">
+      <h2 id="titulo-intro">O que é um grafo?</h2>
+      <p>
+        Um grafo é uma estrutura formada por <strong>vértices</strong> (os pontos) e
+        <strong>arestas</strong> (as ligações entre eles). Ele modela redes sociais, mapas,
+        internet, rotas de entrega e muito mais.
+      </p>
+      <div class="grid">
+        <div class="box"><strong>Não direcionado</strong><br>A aresta vale nos dois sentidos, como uma amizade.</div>
+        <div class="box"><strong>Direcionado</strong><br>A aresta tem sentido, como seguir alguém.</div>
+        <div class="box"><strong>Ponderado</strong><br>Cada aresta tem um peso, como a distância entre cidades.</div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="titulo-repr">
+      <h2 id="titulo-repr">Como guardar um grafo na memória</h2>
+      <p>O grafo abaixo é o mesmo da simulação. Veja as duas representações mais usadas:</p>
+      <div class="grid">
+        <div>
+          <h3>Matriz de adjacência</h3>
+          <div class="scroll-x" id="matriz"></div>
+          <p class="muted">1 = existe aresta. Consulta rápida, mas gasta V² de memória.</p>
+        </div>
+        <div>
+          <h3>Lista de adjacência</h3>
+          <div id="lista"></div>
+          <p class="muted">Guarda só os vizinhos. Economiza memória em grafos esparsos.</p>
+        </div>
+      </div>
+      <pre><code>typedef struct grafo {
+    int nro_vertices;
+    int **arestas;   // matriz de adjacência
+    int *grau;
+} Grafo;</code></pre>
+    </section>
+
+    <section class="card" aria-labelledby="titulo-sim">
+      <h2 id="titulo-sim">Simulação: percorrendo o grafo</h2>
+      <p>
+        A <strong>busca em largura (BFS)</strong> visita primeiro os vizinhos mais próximos,
+        usando uma <strong>fila</strong>. A <strong>busca em profundidade (DFS)</strong> mergulha
+        o máximo possível antes de voltar, usando uma <strong>pilha</strong>.
+      </p>
+
+      <div class="controles">
+        <label class="sr-only" for="algoritmo">Algoritmo</label>
+        <select id="algoritmo">
+          <option value="bfs">BFS (largura)</option>
+          <option value="dfs">DFS (profundidade)</option>
+        </select>
+        <button type="button" class="primario" id="btn-executar">▶ Executar</button>
+        <button type="button" id="btn-passo">Passo</button>
+        <button type="button" id="btn-reiniciar">Reiniciar</button>
+      </div>
+
+      <svg id="grafo" viewBox="0 0 560 300" role="img" aria-label="Grafo com 7 vértices"></svg>
+
+      <ul class="legenda muted">
+        <li><span class="ponto nao-visto"></span>não visto</li>
+        <li><span class="ponto na-estrutura"></span>na estrutura</li>
+        <li><span class="ponto atual"></span>atual</li>
+        <li><span class="ponto concluido"></span>concluído</li>
+      </ul>
+
+      <div class="painel" id="estrutura">Estrutura: —</div>
+      <div class="painel" id="ordem">Ordem de visita: —</div>
+      <p class="muted">As arestas azuis mostram a árvore de percurso que o algoritmo constrói.</p>
+    </section>
+
+    <footer class="muted">Feito para a disciplina de Estratégias de Programação</footer>
+  </main>
+
+  <!-- Ordem importa: cada arquivo depende do anterior -->
+  <script src="js/dados.js"></script>
+  <script src="js/algoritmos.js"></script>
+  <script src="js/interface.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
