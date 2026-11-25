@@ -20,4 +20,3 @@ grafos/
 ```
 A ordem dos `<script>` no HTML importa: cada arquivo usa o anterior,
 compartilhando o objeto global `window.Grafos`.
-# grafos
